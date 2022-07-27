@@ -32,7 +32,13 @@ class App extends Component {
     return (
       <div className='App'>
         {this.state.monsters.map((monster) => {
-          return <h1 key={monster.id}>{monster.name}</h1>;
+          return (
+            // it's a good practice to add a key at the highest element (in this case div)
+            // so its easier to differentiate these h1 elements from each other .
+            <div key={monster.id}>
+              <h1>{monster.name}</h1>
+            </div>
+          );
         })}
       </div>
     );
