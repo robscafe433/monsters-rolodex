@@ -13,6 +13,7 @@ class App extends Component {
     this.state = {
       // null state ... no users -> showing empty array in case of error
       monsters: [],
+      searchField: "",
     };
     console.log("Constructor");
   }
@@ -64,6 +65,14 @@ class App extends Component {
   // it determines what to show
   render() {
     console.log("Render");
+
+    // we need to filter monsters to match from searchbox
+    // we know that monsters = [{'name: Leanne'}, {name : 'Ervin'}] etc ..
+    const filteredMonsters = this.state.monsters.filter((monster) => {
+      // returns boolean
+      return monster.name.toLocaleLowerCase().includes(this.state.searchField);
+    });
+
     return (
       <div className='App'>
         <input
@@ -71,22 +80,22 @@ class App extends Component {
           type='search'
           placeholder='search monsters'
           onChange={(event) => {
-            console.log(event.target.value);
+            // console.log({ startingArray: this.state.monsters });
             // lowerCase the search
-            const searchString = event.target.value.toLocaleLowerCase();
-            // we need to filter monsters to match from searchbox
-            // we know that monsters = [{'name: Leanne'}, {name : 'Ervin'}] etc ..
-            const filteredMonsters = this.state.monsters.filter((monster) => {
-              // returns boolean
-              return monster.name.toLocaleLowerCase().includes(searchString);
-            });
+            const searchField = event.target.value.toLocaleLowerCase();
+
             // updates our state
-            this.setState(() => {
-              return { monsters: filteredMonsters };
-            });
+            this.setState(
+              () => {
+                return { searchField };
+              },
+              () => {
+                // console.log({ endingArray: this.state.monsters });
+              }
+            );
           }}
         />
-        {this.state.monsters.map((monster) => {
+        {filteredMonsters.map((monster) => {
           return (
             // it's a good practice to add a key at the highest element (in this case div)
             // so its easier to differentiate these h1 elements from each other .
