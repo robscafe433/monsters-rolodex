@@ -1,5 +1,12 @@
 // seting up Class components
+//===============================================================
+// 1) React renders on MOUNT
+// 2) React re-renders whenever props are changed
+// 3) React re-renders whenever setState function is called
+//===============================================================
 import { Component } from "react";
+
+import CardList from "./components/card-list/card-list.component";
 import "./App.css";
 
 class App extends Component {
@@ -16,7 +23,6 @@ class App extends Component {
       // adding searchField to our state
       searchField: "",
     };
-    console.log("Constructor");
   }
   // ===================================================
   // WE need to answer following questions:
@@ -49,7 +55,6 @@ class App extends Component {
   };
 
   componentDidMount() {
-    console.log("Component Mount");
     // we gonna fetch the data from this API
     fetch("https://jsonplaceholder.typicode.com/users")
       // if success:
@@ -63,22 +68,16 @@ class App extends Component {
 
       // Now we gonna assign values (users) to monsters array
       .then((users) =>
-        this.setState(
-          () => {
-            return { monsters: users };
-          },
-          // callback function just to check if this.state has correct value
-          () => {
-            console.log(this.state);
-          }
-        )
+        // whenever we call setState , render is gonna be called again
+        this.setState(() => {
+          return { monsters: users };
+        })
       );
   }
 
   // ORDER: render function runs after construction function
   // it determines what to show and it runs every time React needs to update DOM
   render() {
-    console.log("Render");
     // deconstruction
     const { monsters, searchField } = this.state;
     const { onSearchChange } = this;
@@ -97,15 +96,8 @@ class App extends Component {
           placeholder='search monsters'
           onChange={onSearchChange}
         />
-        {filteredMonsters.map((monster) => {
-          return (
-            // it's a good practice to add a key at the highest element (in this case div)
-            // so its easier to differentiate these h1 elements from each other .
-            <div key={monster.id}>
-              <h1>{monster.name}</h1>
-            </div>
-          );
-        })}
+
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
