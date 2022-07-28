@@ -1,22 +1,28 @@
 // seting up Class components
 import { Component } from "react";
-
 import "./App.css";
 
 class App extends Component {
+  // ORDER : Constructor function will run FIRST
+
   constructor() {
+    // just to see in console the flow of rerendering ( what order runs the functions )
     super();
 
+    // State object for this Component with initial values (monsters)
     this.state = {
       // null state ... no users -> showing empty array in case of error
       monsters: [],
     };
+    console.log("1");
   }
   // WE need to answer following questions:
   // 1) How to get the monster list?
   // the list should rerender as soon as app is mounted (started)
   // A : using React lifecycle methods .
+  // ORDER : componentDidMount runs THIRD (after render function)
   componentDidMount() {
+    console.log("3");
     // we gonna fetch the data from this API
     fetch("https://jsonplaceholder.typicode.com/users")
       // if success:
@@ -47,13 +53,17 @@ class App extends Component {
   // https://jsonplaceholder.typicode.com/users
   // 3) Where to put the list?
   // A: gonna be in our state monster array
-  // then((users) =>
+  // .then((users) =>
   // this.setState(
   //   () => {
   //     return { monsters: users };
   //   });
   // ======================================================
+
+  // ORDER: render function runs after construction function
+  // it determines what to show
   render() {
+    console.log("2");
     return (
       <div className='App'>
         {this.state.monsters.map((monster) => {
