@@ -1,7 +1,9 @@
 ## Hello! 😃
 
-     This is our first mini react-project which We are doing together with Robert @RobertReact433 .
-     This project is a part of React Devloper course with a goal to practice and gain skills in React.js
+     This is my first mini react-project ( excited! 😃 )
+     This is a part of React Devloper course with a goal to get familiar with React.js
 
-     Both of us are new to React with a little or no previous experience, that said we are committed
-     to learn and master React throughout the React Developer course we are taking online .
+     It was challanging to begin with, that said I am committed
+     to learn and master React throughout the React Developer course I'm taking online .
+     
+     
