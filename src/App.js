@@ -14,7 +14,7 @@ class App extends Component {
       // null state ... no users -> showing empty array in case of error
       monsters: [],
     };
-    console.log("1");
+    console.log("Constructor");
   }
   // WE need to answer following questions:
   // 1) How to get the monster list?
@@ -22,7 +22,7 @@ class App extends Component {
   // A : using React lifecycle methods .
   // ORDER : componentDidMount runs THIRD (after render function)
   componentDidMount() {
-    console.log("3");
+    console.log("Component Mount");
     // we gonna fetch the data from this API
     fetch("https://jsonplaceholder.typicode.com/users")
       // if success:
@@ -63,9 +63,29 @@ class App extends Component {
   // ORDER: render function runs after construction function
   // it determines what to show
   render() {
-    console.log("2");
+    console.log("Render");
     return (
       <div className='App'>
+        <input
+          className='search-box'
+          type='search'
+          placeholder='search monsters'
+          onChange={(event) => {
+            console.log(event.target.value);
+            // lowerCase the search
+            const searchString = event.target.value.toLocaleLowerCase();
+            // we need to filter monsters to match from searchbox
+            // we know that monsters = [{'name: Leanne'}, {name : 'Ervin'}] etc ..
+            const filteredMonsters = this.state.monsters.filter((monster) => {
+              // returns boolean
+              return monster.name.toLocaleLowerCase().includes(searchString);
+            });
+            // updates our state
+            this.setState(() => {
+              return { monsters: filteredMonsters };
+            });
+          }}
+        />
         {this.state.monsters.map((monster) => {
           return (
             // it's a good practice to add a key at the highest element (in this case div)
