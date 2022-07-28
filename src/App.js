@@ -8,26 +8,51 @@ class App extends Component {
     super();
 
     this.state = {
-      monsters: [
-        {
-          name: "Linda",
-          id: "123wersw23",
-        },
-        {
-          name: "Frank",
-          id: "1234werw23",
-        },
-        {
-          name: "Jacky",
-          id: "12323werw23",
-        },
-        {
-          name: "Tribet",
-          id: "12443werw23",
-        },
-      ],
+      // null state ... no users -> showing empty array in case of error
+      monsters: [],
     };
   }
+  // WE need to answer following questions:
+  // 1) How to get the monster list?
+  // the list should rerender as soon as app is mounted (started)
+  // A : using React lifecycle methods .
+  componentDidMount() {
+    // we gonna fetch the data from this API
+    fetch("https://jsonplaceholder.typicode.com/users")
+      // if success:
+      // to see response object in console:
+      // .then((response) => console.log(response))
+
+      // whatever we will get from this response.json file we can use later
+      .then((response) => response.json())
+      // now we can access users from response.json file
+      // .then((users) => console.log(users));
+
+      // Now we gonna assign values (users) to monsters array
+      .then((users) =>
+        this.setState(
+          () => {
+            return { monsters: users };
+          },
+          // callback function just to check if this.state has correct value
+          () => {
+            console.log(this.state);
+          }
+        )
+      );
+  }
+  // ===================================================
+  // 2) Where to get the list from?
+  // we need to fetch it from API
+  // https://jsonplaceholder.typicode.com/users
+  // 3) Where to put the list?
+  // A: gonna be in our state monster array
+  // then((users) =>
+  // this.setState(
+  //   () => {
+  //     return { monsters: users };
+  //   });
+  // ======================================================
   render() {
     return (
       <div className='App'>
