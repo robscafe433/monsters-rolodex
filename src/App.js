@@ -79,7 +79,7 @@ class App extends Component {
   // it determines what to show and it runs every time React needs to update DOM
   render() {
     console.log("Render");
-
+    // deconstruction
     const { monsters, searchField } = this.state;
     const { onSearchChange } = this;
     // we need to filter monsters to match from searchbox
