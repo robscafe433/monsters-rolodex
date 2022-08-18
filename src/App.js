@@ -4,7 +4,7 @@
 // 2) React re-renders whenever props are changed
 // 3) React re-renders whenever setState function is called
 //===============================================================
-import { Component } from "react";
+import React, { Component } from "react";
 
 import CardList from "./components/card-list/card-list.component";
 import SearchBox from "./components/search-box/search-box.component";
@@ -24,6 +24,7 @@ class App extends Component {
       // adding searchField to our state
       searchField: "",
     };
+    console.log("///// LifeCycle order: Constructor");
   }
   // ===================================================
   // WE need to answer following questions:
@@ -56,6 +57,7 @@ class App extends Component {
   };
 
   componentDidMount() {
+    console.log("///// LifeCycle order: componentDidMount");
     // we gonna fetch the data from this API
     fetch("https://jsonplaceholder.typicode.com/users")
       // if success:
@@ -79,6 +81,7 @@ class App extends Component {
   // ORDER: render function runs after construction function
   // it determines what to show and it runs every time React needs to update DOM
   render() {
+    console.log("///// LifeCycle order: render");
     // deconstruction
     const { monsters, searchField } = this.state;
     const { onSearchChange } = this;
@@ -86,16 +89,16 @@ class App extends Component {
     // we know that monsters = [{'name: Leanne'}, {name : 'Ervin'}] etc ..
     const filteredMonsters = monsters.filter((monster) => {
       // returns boolean
-      return monster.name.toLocaleLowerCase().includes(searchField);
+      return monster.name.toLocaleLowerCase().includes(searchField), monster.id;
     });
 
     return (
-      <div className='App'>
-        <h1 className='app-title'> Monsters Rolodex</h1>
+      <div className="App">
+        <h1 className="app-title"> Monsters Rolodex</h1>
         <SearchBox
           onChangeHandler={onSearchChange}
-          placeholder='search monsters'
-          className='monsters-search-box'
+          placeholder="search monsters"
+          className="monsters-search-box"
         />
         <CardList monsters={filteredMonsters} />
       </div>
